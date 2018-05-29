@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.image.*?>
+<?import com.jfoenix.controls.*?>
+<?import javafx.scene.text.*?>
+<?import java.lang.*?>
+<?import java.util.*?>
+<?import javafx.scene.*?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<AnchorPane prefHeight="500.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ViewController">
+   <children>
+      <Pane prefHeight="500.0" prefWidth="250.0" style="-fx-background-color: #333645;">
+         <children>
+            <Text fx:id="filePath" fill="WHITE" layoutX="1.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No file chosen" textAlignment="CENTER" wrappingWidth="228.63706970214844" />
+            <JFXButton fx:id="chooseImageButton" buttonType="RAISED" layoutX="63.0" layoutY="280.0" onAction="#chooseImage" ripplerFill="#1a31c6" style="-fx-background-color: #00a2d3;" text="Choose Image" textFill="WHITE" />
+            <JFXButton fx:id="search" buttonType="RAISED" layoutX="85.0" layoutY="326.0" onAction="#search" ripplerFill="#1a31c6" style="-fx-background-color: #00a2d3;" text="Search" textFill="WHITE" />
+            <ImageView fx:id="preview" fitHeight="150.0" fitWidth="200.0" layoutX="25.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true" />
+         </children>
+      </Pane>
+      <Text fx:id="count" layoutX="284.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" />
+      <JFXComboBox fx:id="size" focusColor="#ffffff00" layoutX="324.0" layoutY="26.0" promptText="All" unFocusColor="#ffffff00" />
+      <Label layoutX="284.0" layoutY="31.0" text="Size" />
+      <Label layoutX="445.0" layoutY="31.0" text="Number of Results" />
+      <JFXComboBox fx:id="number" focusColor="#ffffff00" layoutX="576.0" layoutY="26.0" promptText="All" unFocusColor="#ffffff00" />
+      <JFXComboBox fx:id="catalog" focusColor="#ffffff00" layoutX="747.0" layoutY="26.0" promptText="None" unFocusColor="#ffffff00" />
+      <Label layoutX="689.0" layoutY="31.0" text="Catalog" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="284.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="294.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="727.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="284.0" layoutY="261.0" pickOnBounds="true" preserveRatio="true" />
+   </children>
+</AnchorPane>
