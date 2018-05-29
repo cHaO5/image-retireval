@@ -20,11 +20,11 @@
          </children>
       </Pane>
       <Text fx:id="count" layoutX="284.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <JFXComboBox fx:id="size" focusColor="#ffffff00" layoutX="324.0" layoutY="26.0" promptText="All" unFocusColor="#ffffff00" />
+      <JFXComboBox fx:id="size" focusColor="#ffffff00" layoutX="324.0" layoutY="26.0" unFocusColor="#ffffff00" />
       <Label layoutX="284.0" layoutY="31.0" text="Size" />
       <Label layoutX="445.0" layoutY="31.0" text="Number of Results" />
-      <JFXComboBox fx:id="number" focusColor="#ffffff00" layoutX="576.0" layoutY="26.0" promptText="All" unFocusColor="#ffffff00" />
-      <JFXComboBox fx:id="catalog" focusColor="#ffffff00" layoutX="747.0" layoutY="26.0" promptText="None" unFocusColor="#ffffff00" />
+      <JFXComboBox fx:id="number" focusColor="#ffffff00" layoutX="576.0" layoutY="26.0" unFocusColor="#ffffff00" />
+      <JFXComboBox fx:id="catalog" focusColor="#ffffff00" layoutX="747.0" layoutY="26.0" unFocusColor="#ffffff00" />
       <Label layoutX="689.0" layoutY="31.0" text="Catalog" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="284.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="294.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true" />

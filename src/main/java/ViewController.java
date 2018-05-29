@@ -81,13 +81,11 @@ public class ViewController implements Initializable {
     public void initialize(URL location, ResourceBundle resources) {
         // Image size
         size.getItems().addAll("All", "Small", "Medium", "Large");
+        size.setValue("All");
 
         // Number of result
-//        ToggleGroup group = new ToggleGroup();
-//        result5.setToggleGroup(group);
-//        result10.setToggleGroup(group);
-//        result15.setToggleGroup(group);
-        number.getItems().addAll("All", 5, 10, 15);
+        number.getItems().addAll("All", "5", "10", "15");
+        number.setValue("All");
 
         catalog.getItems().addAll("None",
                 "Airplane",
@@ -102,53 +100,29 @@ public class ViewController implements Initializable {
                 "Rooster",
                 "Wild_cat",
                 "Yin_yang");
-//        FileChooser fileChooser = new FileChooser();
-//
-//        chooseFile.setOnAction(
-//                (final ActionEvent e) -> {
-//                    //fileChooser.showOpenDialog(this.stage);
-//                });
-//
-//        AnchorPane root = new AnchorPane();
-//
-////        FileChooser fileChooser = new FileChooser();
-////        fileChooser.setTitle("打开文件");
-////
-////
-////        Label mLabel = new Label();
-////        mLabel.setLayoutY(40);
-//
-////        Button btn = new Button("打开文件");
-////        btn.setOnAction(event -> {
-////            File file = fileChooser.showOpenDialog(primaryStage);
-////            if(file != null){
-////                mLabel.setText(file.getAbsolutePath());
-////            }else {
-////                mLabel.setText("没有打开任何文件");
-////            }
-////        });
-//        chooseFile.setOnAction(event -> {
-//            File file = fileChooser.showOpenDialog(primaryStage);
-//            if(file != null){
-//                mLabel.setText(file.getAbsolutePath());
-//            }else {
-//                mLabel.setText("没有打开任何文件");
-//            }
-//        });
-//
-//        root.getChildren().addAll(btn,mLabel);
-//        //root.getChildren().add(btn);
-//        primaryStage.setTitle("文件选择FileChooser");
-//        primaryStage.setScene(new Scene(root, 300, 275));
-//        primaryStage.show();
-//
-//        Stage stage = (Stage)search.get
+        catalog.setValue("None");
+
     }
 
     @FXML
     private void search() {
-        int num = 0;
-        count.setText("The number of result(s) is " + num + ".");
+        int advanceNum = 0;
+        if (!number.getValue().equals("All")) {
+            advanceNum = Integer.valueOf((String)size.getValue());
+        }
+        String advanceSize = (String)size.getValue();
+        String advanceCatalog = (String)catalog.getValue();
+
+        int resultNum = 0;
+        count.setText("The number of result(s) is " + resultNum + ".");
+
+        filter(advanceSize, advanceNum, advanceCatalog);
+
+        display();
     }
+
+    private void filter(String size, int num, String catalog) {}
+
+    private void display() {}
 
 }
