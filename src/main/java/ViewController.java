@@ -48,6 +48,8 @@ public class ViewController implements Initializable {
     private Text count;
     @FXML
     private Text icon;
+    @FXML
+    private JFXButton label;
 
     private HashMap<String, Integer> filename = new HashMap<String, Integer>() {
         {
@@ -128,6 +130,7 @@ public class ViewController implements Initializable {
                 "Yin_yang");
         catalog.setValue("None");
 
+        label.setVisible(false);
     }
 
     @FXML
@@ -150,7 +153,10 @@ public class ViewController implements Initializable {
 
                         double temp = fp1.compare(fp2);
 
-                        if (temp > 0.6) {
+                        if (temp == 1.000000) { // Find image
+                            findImage(entry.getKey());
+                            return;
+                        } else if (temp > 0.6) {
                             System.out.printf("sim=%f\n", temp);
                             imageSim.put(entry.getKey() + "_" + String.format("%04d", i) + ".jpg", temp);
                         }
@@ -204,4 +210,16 @@ public class ViewController implements Initializable {
         count.setVisible(true);
     }
 
+    private void findImage(String name) {
+        ArrayList<String> imageList = new ArrayList<>();
+        for (int i = 0; i < filename.get(name); ++i) {
+            imageList.add("src/main/resources/img/" + name + "_" + String.format("%04d", i) + ".jpg");
+            System.out.println("src/main/resources/img/" + name + "_" + String.format("%04d", i) + ".jpg");
+        }
+
+        label.setText(name);
+        label.setVisible(true);
+        count.setText("The number of result(s) is " + imageList.size() + ".");
+        count.setVisible(true);
+    }
 }

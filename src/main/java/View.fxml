@@ -35,5 +35,6 @@
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="294.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="727.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="284.0" layoutY="261.0" pickOnBounds="true" preserveRatio="true" />
+      <JFXButton fx:id="label" disable="true" layoutX="512.0" layoutY="60.0" style="-fx-background-color: #00a2d3;" text="None" textFill="WHITE" />
    </children>
 </AnchorPane>
