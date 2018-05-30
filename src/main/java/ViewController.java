@@ -76,7 +76,7 @@ public class ViewController implements Initializable {
         fileChooser.setTitle("Choose file");
 
         // File filter
-        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("JPG", "*.jpg"));
+        fileChooser.getExtensionFilters().add(new FileChooser.ExtensionFilter("Images", "*.jpg"));
         File image = fileChooser.showOpenDialog(chooseImageButton.getScene().getWindow());
 
         // Show file path
@@ -145,7 +145,7 @@ public class ViewController implements Initializable {
             for (int i = 1; i <= entry.getValue(); ++i) {
                 String imagePath = "src/main/resources/img/" + entry.getKey() + "_" + String.format("%04d", i) + ".jpg";
 //                if (filter(imagePath, advanceSize, advanceNum, advanceCatalog)) {
-                if (checkSize(imagePath, advanceSize) && (advanceCatalog.equals("None") || entry.getKey().equals(advanceCatalog))) {
+                if (advanceCatalog.equals("None") || entry.getKey().equals(advanceCatalog)) {
                     try {
                         FingerPrint fp1 = new FingerPrint(ImageIO.read(new File(filePath.getText())));
                         FingerPrint fp2 = new FingerPrint(ImageIO.read(new File(imagePath)));
@@ -157,8 +157,10 @@ public class ViewController implements Initializable {
                             findImage(entry.getKey());
                             return;
                         } else if (temp > 0.6) {
-                            System.out.printf("sim=%f\n", temp);
-                            imageSim.put(entry.getKey() + "_" + String.format("%04d", i) + ".jpg", temp);
+                            if (checkSize(imagePath, advanceSize)) {
+                                System.out.printf("sim=%f\n", temp);
+                                imageSim.put(entry.getKey() + "_" + String.format("%04d", i) + ".jpg", temp);
+                            }
                         }
 
                     } catch (IOException e) {
@@ -195,13 +197,13 @@ public class ViewController implements Initializable {
             }
         });
 
-        // TODO:最终直接输出展示image即可， 暂时用一个list存起来
+        // TODO: directly output results
         if (!number.getValue().equals("All")) {
             int advanceNum = Integer.valueOf((String)size.getValue());
             for (int i = 0; i < advanceNum; ++i) {
                 if (i < imageList.size()) System.out.println(imageList.get(i).getKey());
             }
-            advanceNum = advanceNum > imageList.size() ? advanceNum : imageList.size();
+            advanceNum = advanceNum < imageList.size() ? advanceNum : imageList.size();
             count.setText("The number of result(s) is " + advanceNum + ".");
         } else {
             for (Map.Entry<String, Double> m : imageList) System.out.println(m.getKey());
@@ -212,14 +214,35 @@ public class ViewController implements Initializable {
 
     private void findImage(String name) {
         ArrayList<String> imageList = new ArrayList<>();
-        for (int i = 0; i < filename.get(name); ++i) {
-            imageList.add("src/main/resources/img/" + name + "_" + String.format("%04d", i) + ".jpg");
-            System.out.println("src/main/resources/img/" + name + "_" + String.format("%04d", i) + ".jpg");
+        String advanceSize = (String)size.getValue();
+        for (int i = 1; i <= filename.get(name); ++i) {
+            if (advanceSize.equals("All") || checkSize("src/main/resources/img/" + name + "_" + String.format("%04d", i) + ".jpg", advanceSize)) {
+                imageList.add("src/main/resources/img/" + name + "_" + String.format("%04d", i) + ".jpg");
+                //System.out.println("src/main/resources/img/" + name + "_" + String.format("%04d", i) + ".jpg");
+            }
         }
+
 
         label.setText(name);
         label.setVisible(true);
-        count.setText("The number of result(s) is " + imageList.size() + ".");
-        count.setVisible(true);
+
+
+        if (!number.getValue().equals("All")) {
+            int advanceNum = Integer.valueOf((String)number.getValue());
+            advanceNum = advanceNum < imageList.size() ? advanceNum : imageList.size();
+            count.setText("The number of result(s) is " + advanceNum + ".");
+            count.setVisible(true);
+
+            int n = (int)(Math.random() * (imageList.size() - advanceNum));
+            for (int i = n; i < advanceNum; ++i) {
+                System.out.println(imageList.get(i));
+            }
+        } else {
+            //for (Map.Entry<String, Double> m : imageList) System.out.println(m.getKey());
+            count.setText("The number of result(s) is " + imageList.size() + ".");
+            count.setVisible(true);
+        }
+
+
     }
 }
