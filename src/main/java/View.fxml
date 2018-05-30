@@ -14,18 +14,23 @@
       <Pane prefHeight="500.0" prefWidth="250.0" style="-fx-background-color: #333645;">
          <children>
             <Text fx:id="filePath" fill="WHITE" layoutX="1.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="No file chosen" textAlignment="CENTER" wrappingWidth="228.63706970214844" />
-            <JFXButton fx:id="chooseImageButton" buttonType="RAISED" layoutX="63.0" layoutY="280.0" onAction="#chooseImage" ripplerFill="#1a31c6" style="-fx-background-color: #00a2d3;" text="Choose Image" textFill="WHITE" />
-            <JFXButton fx:id="search" buttonType="RAISED" layoutX="85.0" layoutY="326.0" onAction="#search" ripplerFill="#1a31c6" style="-fx-background-color: #00a2d3;" text="Search" textFill="WHITE" />
+            <JFXButton fx:id="chooseImageButton" buttonType="RAISED" layoutX="62.0" layoutY="299.0" onAction="#chooseImage" ripplerFill="#1a31c6" style="-fx-background-color: #00a2d3;" text="Choose Image" textFill="WHITE" />
+            <JFXButton fx:id="search" buttonType="RAISED" layoutX="84.0" layoutY="345.0" onAction="#search" ripplerFill="#1a31c6" style="-fx-background-color: #00a2d3;" text="Search" textFill="WHITE" />
             <ImageView fx:id="preview" fitHeight="150.0" fitWidth="200.0" layoutX="25.0" layoutY="87.0" pickOnBounds="true" preserveRatio="true" />
+            <Text fx:id="icon" fill="WHITE" layoutX="10.0" layoutY="109.0" stroke="#b98e8e00" strokeType="OUTSIDE" strokeWidth="0.0" text="Image Retrieval" textAlignment="CENTER" wrappingWidth="230.0">
+               <font>
+                  <Font name="ADELE ADELE" size="67.0" />
+               </font>
+            </Text>
          </children>
       </Pane>
       <Text fx:id="count" layoutX="284.0" layoutY="78.0" strokeType="OUTSIDE" strokeWidth="0.0" />
-      <JFXComboBox fx:id="size" focusColor="#ffffff00" layoutX="324.0" layoutY="26.0" unFocusColor="#ffffff00" />
-      <Label layoutX="284.0" layoutY="31.0" text="Size" />
-      <Label layoutX="445.0" layoutY="31.0" text="Number of Results" />
-      <JFXComboBox fx:id="number" focusColor="#ffffff00" layoutX="576.0" layoutY="26.0" unFocusColor="#ffffff00" />
-      <JFXComboBox fx:id="catalog" focusColor="#ffffff00" layoutX="747.0" layoutY="26.0" unFocusColor="#ffffff00" />
-      <Label layoutX="689.0" layoutY="31.0" text="Catalog" />
+      <JFXComboBox fx:id="size" focusColor="#ffffff00" layoutX="402.0" layoutY="32.0" unFocusColor="#ffffff00" />
+      <Label layoutX="362.0" layoutY="37.0" text="Size" />
+      <Label layoutX="523.0" layoutY="37.0" text="Number of Results" />
+      <JFXComboBox fx:id="number" focusColor="#ffffff00" layoutX="654.0" layoutY="32.0" unFocusColor="#ffffff00" />
+      <JFXComboBox fx:id="catalog" focusColor="#ffffff00" layoutX="825.0" layoutY="32.0" unFocusColor="#ffffff00" />
+      <Label layoutX="767.0" layoutY="37.0" text="Catalog" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="284.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="294.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true" />
       <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="727.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true" />
