@@ -159,8 +159,11 @@ public class ViewController implements Initializable {
 
     @FXML
     private void search() {
+        System.out.println("Start search.");
         imageSim.clear();
         count.setVisible(false);
+
+        boolean found = false;
 
         // Filter and search
         String advanceSize = (String)size.getValue();
@@ -176,6 +179,7 @@ public class ViewController implements Initializable {
                         //System.out.println(fp1.toString(true));
                         if (fp1.compare(fp2) == 1.000000) { // Find image
                             findImage(entry.getKey());
+                            found = true;
                         }
 
                     } catch (IOException e) {
@@ -186,6 +190,17 @@ public class ViewController implements Initializable {
         }
 
         //display();
+        if (!found) {
+            label.setVisible(false);
+            count.setText("The number of result(s) is 0.");
+            count.setVisible(true);
+            image0.setVisible(false);
+            image1.setVisible(false);
+            image2.setVisible(false);
+            image3.setVisible(false);
+            image4.setVisible(false);
+            image5.setVisible(false);
+        }
     }
 
     private boolean checkSize(String filePath, String size) {
