@@ -1,31 +1,16 @@
 import com.jfoenix.controls.*;
-import com.sun.javaws.util.JfxHelper;
-import javafx.application.Application;
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.geometry.Pos;
-import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.control.Label;
-import javafx.scene.control.ToggleGroup;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.text.Text;
 import javafx.stage.FileChooser;
-import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.*;
 
@@ -71,6 +56,7 @@ public class ViewController implements Initializable {
 
     private List<Map.Entry<String, Double>> imageList;
 
+    // Kind of images and amount
     private HashMap<String, Integer> filename = new HashMap<String, Integer>() {
         {
             put("airplane", 100);
@@ -111,20 +97,7 @@ public class ViewController implements Initializable {
             filePath.setText("No file chosen");
             preview.setVisible(false);
             icon.setVisible(true);
-            return;
         }
-
-//        BufferedImage sourceImage = null;
-//        try {
-//            sourceImage = ImageIO.read(new FileInputStream(image));
-//            System.out.println(sourceImage.getWidth());
-//            System.out.println(sourceImage.getHeight());
-//        } catch (IOException e1) {
-//            e1.printStackTrace();
-//        }
-
-
-
     }
 
     @Override
@@ -171,13 +144,11 @@ public class ViewController implements Initializable {
         for (HashMap.Entry<String, Integer> entry : filename.entrySet()) {
             for (int i = 1; i <= entry.getValue(); ++i) {
                 String imagePath = "src/main/resources/img/" + entry.getKey() + "_" + String.format("%04d", i) + ".jpg";
-//                if (filter(imagePath, advanceSize, advanceNum, advanceCatalog)) {
                 if (advanceCatalog.equals("None") || entry.getKey().equals(advanceCatalog)) {
                     try {
                         FingerPrint fp1 = new FingerPrint(ImageIO.read(new File(filePath.getText())));
                         FingerPrint fp2 = new FingerPrint(ImageIO.read(new File(imagePath)));
-                        //System.out.println(fp1.toString(true));
-                        if (fp1.compare(fp2) == 1.000000) { // Find image
+                        if (fp1.compare(fp2) == 1.000000) { // Find same image
                             findImage(entry.getKey());
                             found = true;
                         }
@@ -240,7 +211,6 @@ public class ViewController implements Initializable {
     }
 
     private void findImage(String name) {
-
         String advanceSize = (String)size.getValue();
 
         for (int i = 1; i <= filename.get(name); ++i) {
@@ -258,13 +228,7 @@ public class ViewController implements Initializable {
             }
         }
 
-
-//        for (int i = 1; i <= filename.get(name); ++i) {
-//            if (advanceSize.equals("All") || checkSize("src/main/resources/img/" + name + "_" + String.format("%04d", i) + ".jpg", advanceSize)) {
-//                imageList.add("src/main/resources/img/" + name + "_" + String.format("%04d", i) + ".jpg");
-//                //System.out.println("src/main/resources/img/" + name + "_" + String.format("%04d", i) + ".jpg");
-//            }
-//        }
+        // Sort image by similarity
         imageList = new ArrayList<>(imageSim.entrySet());
         imageList.sort(new Comparator<Map.Entry<String, Double>>() {
             public int compare(Map.Entry<String, Double> o1,
@@ -278,9 +242,6 @@ public class ViewController implements Initializable {
         label.setText(name);
         label.setVisible(true);
 
-
-
-
         if (!number.getValue().equals("All")) {
             int advanceNum = Integer.valueOf((String)number.getValue());
             advanceNum = advanceNum < imageList.size() ? advanceNum : imageList.size();
@@ -291,7 +252,6 @@ public class ViewController implements Initializable {
                 System.out.println(imageList.get(i));
             }
         } else {
-            //for (Map.Entry<String, Double> m : imageList) System.out.println(m.getKey());
             count.setText("The number of result(s) is " + imageList.size() + ".");
             count.setVisible(true);
         }
@@ -299,6 +259,7 @@ public class ViewController implements Initializable {
 
     }
 
+    // Display of results
     private void refreshView(String instruction, List<Map.Entry<String, Double>> imageList) {
         if (instruction.equals("next")) {
             currentPage++;
@@ -312,8 +273,6 @@ public class ViewController implements Initializable {
         image3.setVisible(false);
         image4.setVisible(false);
         image5.setVisible(false);
-//        pre.setDisable(false);
-//        next.setDisable(false);
 
         int advanceNum = 10000;
         if (!number.getValue().equals("All")) advanceNum = Integer.valueOf((String)number.getValue());
@@ -334,20 +293,11 @@ public class ViewController implements Initializable {
                 pre.setDisable(true);
                 break;
             case "pre":
-                //if (currentPage == 0) break;
-                //currentPage--;
                 if (currentPage == 0) pre.setDisable(true);
                 refresh();
                 break;
             case "next":
-//                if ((currentPage + 1) * 6 >= imageList.size()) {
-//                    //next.setDisable(true);
-//                    break;
-//                }
-                //currentPage++;
-
                 if (currentPage * 6 >= imageList.size() || currentPage * 6 > advanceNum) {
-//                    next.setDisable(true);
                     break;
                 }
                 refresh();
@@ -360,6 +310,7 @@ public class ViewController implements Initializable {
     @FXML
     private void nextPage() { refreshView("next", imageList); }
 
+    // Display each image
     private void refresh() {
         int advanceNum = 0;
         if (!number.getValue().equals("All")) advanceNum = Integer.valueOf((String)number.getValue());
