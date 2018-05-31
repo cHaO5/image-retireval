@@ -1,6 +1,5 @@
-import com.jfoenix.controls.JFXButton;
-import com.jfoenix.controls.JFXComboBox;
-import com.jfoenix.controls.JFXRadioButton;
+import com.jfoenix.controls.*;
+import com.sun.javaws.util.JfxHelper;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -21,6 +20,7 @@ import javafx.stage.FileChooser;
 import javafx.stage.Stage;
 
 import javax.imageio.ImageIO;
+import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.FileInputStream;
@@ -50,6 +50,26 @@ public class ViewController implements Initializable {
     private Text icon;
     @FXML
     private JFXButton label;
+    @FXML
+    private ImageView image0;
+    @FXML
+    private ImageView image1;
+    @FXML
+    private ImageView image2;
+    @FXML
+    private ImageView image3;
+    @FXML
+    private ImageView image4;
+    @FXML
+    private ImageView image5;
+    @FXML
+    private JFXButton pre;
+    @FXML
+    private JFXButton next;
+
+    private int currentPage = 0;
+
+    private List<Map.Entry<String, Double>> imageList;
 
     private HashMap<String, Integer> filename = new HashMap<String, Integer>() {
         {
@@ -82,10 +102,12 @@ public class ViewController implements Initializable {
         // Show file path
         if (image != null) {
             filePath.setText(image.getAbsolutePath());
+            filePath.setVisible(false);
             preview.setVisible(true);
             preview.setImage(new Image(image.toURI().toString()));
             icon.setVisible(false);
         } else {
+            filePath.setVisible(true);
             filePath.setText("No file chosen");
             preview.setVisible(false);
             icon.setVisible(true);
@@ -116,21 +138,23 @@ public class ViewController implements Initializable {
         number.setValue("All");
 
         catalog.getItems().addAll("None",
-                "Airplane",
-                "Ant",
-                "Butterfly",
-                "Chair",
-                "Crab",
-                "Cup",
-                "Garfield",
-                "Lamp",
-                "Pizza",
-                "Rooster",
-                "Wild_cat",
-                "Yin_yang");
+                "airplane",
+                "ant",
+                "butterfly",
+                "chair",
+                "crab",
+                "cup",
+                "garfield",
+                "lamp",
+                "pizza",
+                "rooster",
+                "wild_cat",
+                "yin_yang");
         catalog.setValue("None");
 
         label.setVisible(false);
+        pre.setDisable(true);
+        next.setDisable(true);
     }
 
     @FXML
@@ -150,17 +174,8 @@ public class ViewController implements Initializable {
                         FingerPrint fp1 = new FingerPrint(ImageIO.read(new File(filePath.getText())));
                         FingerPrint fp2 = new FingerPrint(ImageIO.read(new File(imagePath)));
                         //System.out.println(fp1.toString(true));
-
-                        double temp = fp1.compare(fp2);
-
-                        if (temp == 1.000000) { // Find image
+                        if (fp1.compare(fp2) == 1.000000) { // Find image
                             findImage(entry.getKey());
-                            return;
-                        } else if (temp > 0.6) {
-                            if (checkSize(imagePath, advanceSize)) {
-                                System.out.printf("sim=%f\n", temp);
-                                imageSim.put(entry.getKey() + "_" + String.format("%04d", i) + ".jpg", temp);
-                            }
                         }
 
                     } catch (IOException e) {
@@ -170,7 +185,7 @@ public class ViewController implements Initializable {
             }
         }
 
-        display();
+        //display();
     }
 
     private boolean checkSize(String filePath, String size) {
@@ -188,16 +203,13 @@ public class ViewController implements Initializable {
 
     private void display() {
         List<Map.Entry<String,Double>> imageList = new ArrayList<>(imageSim.entrySet());
-        // TODO:lambda expression
-        Collections.sort(imageList, new Comparator<Map.Entry<String, Double>>() {
-            //降序排序
+        imageList.sort(new Comparator<Map.Entry<String, Double>>() {
             public int compare(Map.Entry<String, Double> o1,
                                Map.Entry<String, Double> o2) {
                 return o2.getValue().compareTo(o1.getValue());
             }
         });
 
-        // TODO: directly output results
         if (!number.getValue().equals("All")) {
             int advanceNum = Integer.valueOf((String)size.getValue());
             for (int i = 0; i < advanceNum; ++i) {
@@ -213,18 +225,45 @@ public class ViewController implements Initializable {
     }
 
     private void findImage(String name) {
-        ArrayList<String> imageList = new ArrayList<>();
+
         String advanceSize = (String)size.getValue();
+
         for (int i = 1; i <= filename.get(name); ++i) {
+            String imagePath = "src/main/resources/img/" + name + "_" + String.format("%04d", i) + ".jpg";
             if (advanceSize.equals("All") || checkSize("src/main/resources/img/" + name + "_" + String.format("%04d", i) + ".jpg", advanceSize)) {
-                imageList.add("src/main/resources/img/" + name + "_" + String.format("%04d", i) + ".jpg");
-                //System.out.println("src/main/resources/img/" + name + "_" + String.format("%04d", i) + ".jpg");
+                try {
+                    FingerPrint fp1 = new FingerPrint(ImageIO.read(new File(filePath.getText())));
+                    FingerPrint fp2 = new FingerPrint(ImageIO.read(new File(imagePath)));
+                    //System.out.println(fp1.toString(true));
+                    double temp = fp1.compare(fp2);
+                    imageSim.put("src/main/resources/img/" + name + "_" + String.format("%04d", i) + ".jpg", temp);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         }
 
 
+//        for (int i = 1; i <= filename.get(name); ++i) {
+//            if (advanceSize.equals("All") || checkSize("src/main/resources/img/" + name + "_" + String.format("%04d", i) + ".jpg", advanceSize)) {
+//                imageList.add("src/main/resources/img/" + name + "_" + String.format("%04d", i) + ".jpg");
+//                //System.out.println("src/main/resources/img/" + name + "_" + String.format("%04d", i) + ".jpg");
+//            }
+//        }
+        imageList = new ArrayList<>(imageSim.entrySet());
+        imageList.sort(new Comparator<Map.Entry<String, Double>>() {
+            public int compare(Map.Entry<String, Double> o1,
+                               Map.Entry<String, Double> o2) {
+                return o2.getValue().compareTo(o1.getValue());
+            }
+        });
+
+        refreshView("none", imageList);
+
         label.setText(name);
         label.setVisible(true);
+
+
 
 
         if (!number.getValue().equals("All")) {
@@ -233,8 +272,7 @@ public class ViewController implements Initializable {
             count.setText("The number of result(s) is " + advanceNum + ".");
             count.setVisible(true);
 
-            int n = (int)(Math.random() * (imageList.size() - advanceNum));
-            for (int i = n; i < advanceNum; ++i) {
+            for (int i = 0; i < advanceNum; ++i) {
                 System.out.println(imageList.get(i));
             }
         } else {
@@ -244,5 +282,106 @@ public class ViewController implements Initializable {
         }
 
 
+    }
+
+    private void refreshView(String instruction, List<Map.Entry<String, Double>> imageList) {
+        if (instruction.equals("next")) {
+            currentPage++;
+        } else if (instruction.equals("pre")) {
+            currentPage--;
+        }
+
+        image0.setVisible(false);
+        image1.setVisible(false);
+        image2.setVisible(false);
+        image3.setVisible(false);
+        image4.setVisible(false);
+        image5.setVisible(false);
+//        pre.setDisable(false);
+//        next.setDisable(false);
+
+        int advanceNum = 10000;
+        if (!number.getValue().equals("All")) advanceNum = Integer.valueOf((String)number.getValue());
+        if (currentPage == 0) {
+            pre.setDisable(true);
+        } else {
+            pre.setDisable(false);
+        }
+        if ((currentPage + 1) * 6 >= imageList.size() || (currentPage + 1) * 6 > advanceNum) {
+            next.setDisable(true);
+        } else {
+            next.setDisable(false);
+        }
+
+        switch (instruction) {
+            case "none":
+                refresh();
+                pre.setDisable(true);
+                break;
+            case "pre":
+                //if (currentPage == 0) break;
+                //currentPage--;
+                if (currentPage == 0) pre.setDisable(true);
+                refresh();
+                break;
+            case "next":
+//                if ((currentPage + 1) * 6 >= imageList.size()) {
+//                    //next.setDisable(true);
+//                    break;
+//                }
+                //currentPage++;
+
+                if (currentPage * 6 >= imageList.size() || currentPage * 6 > advanceNum) {
+//                    next.setDisable(true);
+                    break;
+                }
+                refresh();
+                break;
+        }
+    }
+
+    @FXML
+    private void prePage() { refreshView("pre", imageList); }
+    @FXML
+    private void nextPage() { refreshView("next", imageList); }
+
+    private void refresh() {
+        int advanceNum = 0;
+        if (!number.getValue().equals("All")) advanceNum = Integer.valueOf((String)number.getValue());
+        if (imageList.size() - 6 * currentPage >= 1) {
+            image0.setImage(new Image((new File((imageList.get(6 * currentPage)).getKey()).toURI().toString())));
+            image0.setVisible(true);
+        }
+        if (imageList.size() - 6 * currentPage >= 2) {
+            image1.setImage(new Image((new File((imageList.get(1 + 6 * currentPage)).getKey()).toURI().toString())));
+            image1.setVisible(true);
+        }
+        if (imageList.size() - 6 * currentPage >= 3) {
+            image2.setImage(new Image((new File((imageList.get(2 + 6 * currentPage)).getKey()).toURI().toString())));
+            image2.setVisible(true);
+        }
+        if (imageList.size() - 6 * currentPage >= 4) {
+            image3.setImage(new Image((new File((imageList.get(3 + 6 * currentPage)).getKey()).toURI().toString())));
+            image3.setVisible(true);
+            if (advanceNum == 15 && currentPage == 2) {
+                image3.setVisible(false);
+            }
+        }
+        if (imageList.size() - 6 * currentPage >= 5) {
+            image4.setImage(new Image((new File((imageList.get(4 + 6 * currentPage)).getKey()).toURI().toString())));
+            image4.setVisible(true);
+            if ((advanceNum == 10 && currentPage == 1) || (advanceNum == 15 && currentPage == 2)) {
+                image4.setVisible(false);
+            }
+        }
+        if (imageList.size() % 6 == 0 || imageList.size() - 6 * currentPage > 5) {
+            image5.setImage(new Image((new File((imageList.get(5 + 6 * currentPage)).getKey()).toURI().toString())));
+            image5.setVisible(true);
+            if ((advanceNum == 5 && currentPage == 0) ||
+                    (advanceNum == 10 && currentPage == 1) ||
+                    (advanceNum == 15 && currentPage == 2)) {
+                image5.setVisible(false);
+            }
+        }
     }
 }

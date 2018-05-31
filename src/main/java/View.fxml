@@ -31,10 +31,14 @@
       <JFXComboBox fx:id="number" focusColor="#ffffff00" layoutX="654.0" layoutY="32.0" unFocusColor="#ffffff00" />
       <JFXComboBox fx:id="catalog" focusColor="#ffffff00" layoutX="825.0" layoutY="32.0" unFocusColor="#ffffff00" />
       <Label layoutX="767.0" layoutY="37.0" text="Catalog" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="284.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="294.0" layoutY="101.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="727.0" layoutY="91.0" pickOnBounds="true" preserveRatio="true" />
-      <ImageView fitHeight="150.0" fitWidth="200.0" layoutX="284.0" layoutY="261.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="image0" fitHeight="150.0" fitWidth="200.0" layoutX="290.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="image1" fitHeight="150.0" fitWidth="200.0" layoutX="520.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="image2" fitHeight="150.0" fitWidth="200.0" layoutX="750.0" layoutY="100.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="image3" fitHeight="150.0" fitWidth="200.0" layoutX="290.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="image4" fitHeight="150.0" fitWidth="200.0" layoutX="520.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true" />
+      <ImageView fx:id="image5" fitHeight="150.0" fitWidth="200.0" layoutX="750.0" layoutY="260.0" pickOnBounds="true" preserveRatio="true" />
       <JFXButton fx:id="label" disable="true" layoutX="512.0" layoutY="60.0" style="-fx-background-color: #00a2d3;" text="None" textFill="WHITE" />
+      <JFXButton fx:id="pre" layoutX="561.0" layoutY="435.0" onAction="#prePage" text="&lt;&lt;" />
+      <JFXButton fx:id="next" layoutX="677.0" layoutY="434.0" onAction="#nextPage" text="&gt;&gt;" />
    </children>
 </AnchorPane>
